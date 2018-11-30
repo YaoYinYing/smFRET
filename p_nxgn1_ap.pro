@@ -96,6 +96,8 @@ while EOF(2) ne 1 do begin
 	no_good = no_good + 1
 endwhile
 
+close, 2
+
 flgd = intarr(2,10000)
 flgd(0,*) = floor(good(0,*))
 flgd(1,*) = floor(good(1,*))
@@ -130,13 +132,13 @@ for i = 0, film_l - 1 do begin
 endfor
 
 close, 1
-close, 2
 
-;
 openr, 1, run + ".pma"
 
 readu, 1, film_x
 readu, 1, film_y
+
+; now read values at peak locations into time_bsl array
 
 for i = 0, film_l - 1 do begin
 	readu, 1, frame
@@ -152,7 +154,6 @@ endfor
 close, 1
 
 time_tr = time_tr-time_bsl
-;
 
 no_good = no_good
 openw, 1, run + ".traces"
